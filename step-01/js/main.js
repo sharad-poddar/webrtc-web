@@ -1,27 +1,30 @@
+// using typescript
 'use strict';
 
-// On this codelab, you will be streaming only video (video: true).
-const mediaStreamConstraints = {
-  video: true,
-};
-
-// Video element where stream will be placed.
-const localVideo = document.querySelector('video');
-
-// Local stream that will be reproduced on the video.
 let localStream;
-
-// Handles success by adding the MediaStream to the video element.
+const localVideo = document.querySelector('video');
 function gotLocalMediaStream(mediaStream) {
   localStream = mediaStream;
   localVideo.srcObject = mediaStream;
 }
 
-// Handles error by logging a message to the console with the error message.
-function handleLocalMediaStreamError(error) {
-  console.log('navigator.getUserMedia error: ', error);
-}
-
-// Initializes media stream.
-navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
-  .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
+/*
+ * mediaDevices.getUserMedia -> used to get the access of camera video 
+ * it is used to get the camera video, here we can also take audio by constraints
+ * here now -> video: true, audio: false
+*/
+navigator.mediaDevices.getUserMedia({ video: true, video: {
+  height: {
+    min: 720
+  },
+  width: {
+    min: 1280
+  }
+}})
+  .then((mediaStream)=>{
+    gotLocalMediaStream(mediaStream);
+    console.log(mediaStream.getVideoTracks());
+    // mediaStream.getVideoTracks()[0].stop();
+  }).catch(()=>{
+    console.log('error in getting the user video')
+  });
