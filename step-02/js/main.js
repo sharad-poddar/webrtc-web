@@ -30,6 +30,7 @@ remoteVideo.addEventListener('onresize', logResizedVideo);
 
 /*
  * handel iceCandidate
+ * iceCandidate are the potential connection endpoints
  * here we are getting the ice candidate, we have to pass it to receiver end 
  * making an ice candidate using RTCIceCandidate, then adding it to another's peer
 */
@@ -64,7 +65,10 @@ function handleConnectionChange(event) {
 
 
 
-// Logs offer creation and sets peer connection session descriptions.
+/*
+ * here the description is type of info in from of SDP is shared 
+ * Logs offer creation and sets peer connection session descriptions
+*/
 function createdOffer(description) {
   localPeerConnection.setLocalDescription(description)
     .then(() => {
